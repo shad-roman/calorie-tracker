@@ -72,13 +72,11 @@ public class UserService {
     }
 
     public double calcDailyCalRate(Users user) {
-        if (user.getGoal() == Goal.LOSE) {
-            return getBMR(user) * 1.2;
-        } else if (user.getGoal() == Goal.MAINTAIN) {
-            return getBMR(user) * 1.5;
-        } else {
-            return getBMR(user) * 1.8;
-        }
+        return switch (user.getGoal()) {
+            case LOSE -> getBMR(user) * Goal.LOSE.constant;
+            case MAINTAIN -> getBMR(user) * Goal.MAINTAIN.constant;
+            case GAIN -> getBMR(user) * Goal.GAIN.constant;
+        };
     }
 
     private double getBMR(Users user) {

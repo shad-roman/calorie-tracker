@@ -26,9 +26,8 @@ public class DishController {
 
     @GetMapping("/{id}")
     public ResponseEntity<Dish> getById (@PathVariable Long id){
-        return dishService.getById(id)
-                .map(dish -> ResponseEntity.ok(dish))
-                .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
+        Dish dish = dishService.getById(id);
+        return ResponseEntity.ok(dish);
     }
 
     @PostMapping

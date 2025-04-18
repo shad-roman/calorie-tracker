@@ -19,13 +19,9 @@ public class DishService {
     public DishService(DishRepository dishRepository) {
         this.dishRepository = dishRepository;
     }
-    public Optional<Dish> getById(Long id){
-        Optional<Dish> task = dishRepository.findById(id);
-        if (task.isPresent()){
-            return task;
-        } else {
-            throw new DishNotFoundException("Dish with id " + id + " not found");
-        }
+    public Dish getById(Long id){
+        return dishRepository.findById(id).
+                orElseThrow(() -> new DishNotFoundException("Dish with id " + id + " not found"));
     }
 
     public List<Dish> getAllDishes() {
