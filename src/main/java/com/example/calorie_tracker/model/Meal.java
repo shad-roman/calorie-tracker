@@ -4,17 +4,22 @@ import jakarta.persistence.*;
 
 import java.time.LocalDate;
 import java.util.*;
-
+@Entity
 public class Meal {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private Users user;
+    @Column(name = "user_id")
+    private Long userId;
 
     @ManyToMany
+    @JoinTable(
+            name = "meal_list_of_dishes",
+            joinColumns = @JoinColumn(name = "meal_id"),  // это будет ссылаться на meal.id
+            inverseJoinColumns = @JoinColumn(name = "dish_id") // это будет ссылаться на dish.dish_id
+    )
     private List<Dish> listOfDishes;
 
     private Double totalCals;
@@ -33,8 +38,8 @@ public class Meal {
         return id;
     }
 
-    public Users getUser() {
-        return user;
+    public Long getUser() {
+        return userId;
     }
 
     public List<Dish> getListOfDishes() {
@@ -49,8 +54,8 @@ public class Meal {
         this.id = id;
     }
 
-    public void setUser(Users user) {
-        this.user = user;
+    public void setUserId(Long userId) {
+        this.userId = userId;
     }
 
     public void setListOfDishes(List<Dish> listOfDishes) {

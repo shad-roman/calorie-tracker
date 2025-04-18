@@ -35,7 +35,7 @@ public class MealService {
     }
 
     public List<Meal> getMealsFroDay (Long userId, LocalDate date){
-        return mealRepository.findByUserAndDate(userId, date);
+        return mealRepository.findByUserIdAndDate(userId, date);
     }
 
     public Meal addMeal (Long userId, List<Long> dishIids){
@@ -52,7 +52,7 @@ public class MealService {
 
         Meal meal = new Meal();
         meal.setDate(LocalDate.now());
-        meal.setUser(user);
+        meal.setUserId(userId);
         meal.setListOfDishes(list);
         meal.setTotalCals(totalCals);
 
