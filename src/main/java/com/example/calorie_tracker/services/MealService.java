@@ -38,12 +38,12 @@ public class MealService {
         return mealRepository.findByUserIdAndDate(userId, date);
     }
 
-    public Meal addMeal (Long userId, List<Long> dishIids){
+    public Meal addMeal (Long userId, List<Long> dishIds){
         Users user = userRepository.findById(userId).
                 orElseThrow(() -> new UserNotFoundException("User with id: " + userId + " not found"));
 
 
-        List<Dish> list = dishRepository.findAllById(dishIids);
+        List<Dish> list = dishRepository.findAllById(dishIds);
 
         Double totalCals = 0.0;
         for (Dish dish : list){
@@ -56,6 +56,6 @@ public class MealService {
         meal.setListOfDishes(list);
         meal.setTotalCals(totalCals);
 
-        return meal;
+        return mealRepository.save(meal);
     }
 }
